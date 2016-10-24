@@ -10,6 +10,7 @@ require "rubygems"
 require "bundler/setup"
 
 require "newrelic_plugin"
+require "socket"
 
 module PostfixAgent
 
@@ -18,7 +19,9 @@ module PostfixAgent
     agent_guid "cassy.mickael.postfix_plugin"
     agent_version "1.0.1"
     agent_config_options :hertz  # frequency of the periodic functions
-    agent_human_labels("Postfix metric Agent") { "Synthetic Postfix data" }
+    plugin_name = "Postfix metric Agent"
+    plugin_instance_name = Socket.gethostname
+    agent_human_labels(plugin_name) { plugin_instance_name }
 
     def count folder
       value = 0
